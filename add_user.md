@@ -91,20 +91,34 @@ pass=$(perl -e 'print crypt($ARGV[0], "password")' $password) # passing the pass
 echo ""
                 echo "Select the type of shell you will be using"
 echo""
+
                         # Shell selection statement
+                        
 echo -e "1) Bash Shell - SFTP Secure\n" 
+
 echo -e "2) False Shell - FTP Unsecure\n"
+
 echo -ne "Enter choice: ";read shell;
+
 case $shell in
+
 1)
         shell=/bin/bash              # case statment for shell selection.
+        
         useradd -u $uid -p $pass -c "$comment" -d $homedir -s $shell $username
+        
         echo -e "Copying System Files ...."
+        
         cd /nas_ftp5/Customer/Imaging/Troy/T_Skel
+        
         cp -Rp `ls` $homedir
+        
         echo -e "Finished Copying System Files ..."
+        
         tail -1 /etc/passwd > $homedir/etc/passwd
+        
         echo "$username" >> /etc/ftpusers
+        
         ;;
 2)
         shell=/bin/false

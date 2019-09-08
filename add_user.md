@@ -117,15 +117,27 @@ esac
         echo -e "$username" '\t' "$homedir" >> /etc/security/chroot.conf
 
         echo "Sending information to FTP2"            # sending information to failover server
+        
         ssh root@ftp2 useradd -u $uid -c '"$comment"' -p $pass  -d $homedir -s $shell $username
+        
         ssh root@ftp2 "echo -e '"$username"' '\t' '"$homedir"' >> /etc/security/chroot.conf"
+        
         ssh root@ftp2 "echo -e '"$username"' >> /etc/ftpusers"
+        
+        
 clear
 echo -e "\n\tThis users login details is as follows: \n"
+
 echo -e "\n\tUsername is: $username \n"
+
 echo -e "\tPassword is: $password \n"
+
 echo -e "\tUser's ID Number is: $uid \n"
+
 echo -e "\tComment is: $comment \n"
+
 echo -e "\tUsers Home Directory is: $homedir \n"
+
 echo -e "\tUsers Shell is: $shell \f"
+
 fi

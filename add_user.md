@@ -125,10 +125,15 @@ case $shell in
         useradd -u $uid -p $pass -c "$comment" -d $homedir -s $shell $username
         ;;
 esac
+
         echo "Setting security on users home directory"
+        
         chown $username:ftp $homedir         # security settings for both shells
+        
         chmod 775 $homedir
+        
         echo -e "$username" '\t' "$homedir" >> /etc/security/chroot.conf
+        
 
         echo "Sending information to FTP2"            # sending information to failover server
         

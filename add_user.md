@@ -89,8 +89,11 @@ if [ $(id -u) -eq 0 ]; then                                     # check if user 
 pass=$(perl -e 'print crypt($ARGV[0], "password")' $password) # passing the password entered
 
 echo ""
+
                 echo "Select the type of shell you will be using"
+                
 echo""
+
 
                         # Shell selection statement
                         

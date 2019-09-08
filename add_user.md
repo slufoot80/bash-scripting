@@ -87,15 +87,17 @@ if [ $(id -u) -eq 0 ]; then                                     # check if user 
         done        
 
 pass=$(perl -e 'print crypt($ARGV[0], "password")' $password) # passing the password entered
+
 echo ""
                 echo "Select the type of shell you will be using"
 echo""
-echo -e "1) Bash Shell - SFTP Secure\n"                         # Shell selection statement
+                        # Shell selection statement
+echo -e "1) Bash Shell - SFTP Secure\n" 
 echo -e "2) False Shell - FTP Unsecure\n"
 echo -ne "Enter choice: ";read shell;
 case $shell in
 1)
-        shell=/bin/bash                                                 # case statment for shell selection.
+        shell=/bin/bash              # case statment for shell selection.
         useradd -u $uid -p $pass -c "$comment" -d $homedir -s $shell $username
         echo -e "Copying System Files ...."
         cd /nas_ftp5/Customer/Imaging/Troy/T_Skel
@@ -110,11 +112,11 @@ case $shell in
         ;;
 esac
         echo "Setting security on users home directory"
-        chown $username:ftp $homedir                                    # security settings for both shells
+        chown $username:ftp $homedir         # security settings for both shells
         chmod 775 $homedir
         echo -e "$username" '\t' "$homedir" >> /etc/security/chroot.conf
 
-        echo "Sending information to FTP2"                              # sending information to failover server
+        echo "Sending information to FTP2"            # sending information to failover server
         ssh root@ftp2 useradd -u $uid -c '"$comment"' -p $pass  -d $homedir -s $shell $username
         ssh root@ftp2 "echo -e '"$username"' '\t' '"$homedir"' >> /etc/security/chroot.conf"
         ssh root@ftp2 "echo -e '"$username"' >> /etc/ftpusers"
